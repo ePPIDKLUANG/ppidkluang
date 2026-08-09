@@ -22,46 +22,6 @@ Sebelum memulakan, pastikan perisian berikut telah dipasang pada komputer anda:
 * MySQL Server
 * Git
 
-## ⚙️ Cara Pemasangan
-
-1. **Klon repositori ini:**
-   ```bash
-   git clone https://github.com
-   ```
-
-2. **Masuk ke dalam direktori projek:**
-   ```bash
-   cd ppid-kluang
-   ```
-
-3. **Pasang komponen yang diperlukan (dependencies):**
-   ```bash
-   composer install
-   npm install
-   ```
-
-4. **Sediakan fail konfigurasi persekitaran:**
-   Salin fail `.env.example` kepada `.env` dan kemas kini maklumat pangkalan data anda.
-   ```bash
-   cp .env.example .env
-   ```
-
-5. **Jana kunci aplikasi (jika guna Laravel):**
-   ```bash
-   php artisan key:generate
-   ```
-
-6. **Laksanakan migrasi pangkalan data:**
-   ```bash
-   php artisan migrate --seed
-   ```
-
-7. **Jalankan pelayan tempatan:**
-   ```bash
-   php artisan serve
-   ```
-   Buka `http://localhost:8000` pada pelayar web anda.
-
 ## 👤 Peranan Pengguna (Roles)
 1. **Orang Awam (Pemohon):** Mengisi borang dan menyemak status.
 2. **Pegawai PPID (Pentadbir):** Memproses permohonan dan mengemas kini status.
