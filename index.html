@@ -1367,6 +1367,7 @@
             namaPPID: { label: "Nama PPID", get: s => "PPID KLUANG" },
             kategori: { label: "Kategori Institusi", get: s => getCategoryLabel(getSchoolCategory(s)) },
             noDaftar: { label: "Pendaftaran", get: s => s.noDaftar },
+            alamat: { label: "Alamat Penuh", get: s => s.alamat || "-" },
             pengetua: { label: "Pengetua/GB", get: s => s.pengetua || "-" },
             senaraiNamaGuruBesar: { label: "Nama GB", get: s => {
                 const gb = getTeachersForSchool(s.nama).find(t => t.status === 'Aktif' && (t.jawatan === 'GURU BESAR' || t.jawatan === 'GB'));
@@ -2185,7 +2186,7 @@
 
                         if (!hideInstitusi) {
                             // Lajur Kedua (Nama Institusi)
-                            tbody += `<td class="px-4 py-3 text-right uppercase text-xs tracking-wider border-r border-slate-200 sticky left-0 bg-slate-100 z-10">Jumlah Keseluruhan</td>`;
+                            tbody += `<td class="px-4 py-3 text-left uppercase text-xs tracking-wider border-r border-slate-200 sticky left-0 bg-slate-100 z-10">Jumlah Keseluruhan</td>`;
                             
                             // Baki Lajur Data (Ketiga dan seterusnya)
                             displayCols.forEach(k => {
@@ -2197,7 +2198,7 @@
                             // Mod senarai mendatar (flatten), lajur kedua ambil alih lajur pertama dalam senarai pilihan
                             displayCols.forEach((k, index) => {
                                 if (index === 0) {
-                                    tbody += `<td class="px-4 py-3 text-right uppercase text-xs tracking-wider border-r border-slate-200 bg-slate-100">Jumlah Keseluruhan</td>`;
+                                    tbody += `<td class="px-4 py-3 text-left uppercase text-xs tracking-wider border-r border-slate-200 bg-slate-100">Jumlah Keseluruhan</td>`;
                                 } else {
                                     let isNumCol = typeof reportColumnsAvailable[k].get(data[0] || {}) === 'number';
                                     let val = isNumCol ? totals[k] : '-';
