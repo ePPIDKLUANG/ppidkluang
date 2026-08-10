@@ -347,16 +347,23 @@
                             <option value="DG12">DG12</option>
                             <option value="DG13">DG13</option>
                             <option value="DG14">DG14</option>
-                            <option value="DG29">DG29</option>
-                            <option value="DG32">DG32</option>
-                            <option value="DG34">DG34</option>
-                            <option value="DG38">DG38</option>
-                            <option value="DG41">DG41</option>
-                            <option value="DG42">DG42</option>
-                            <option value="DG44">DG44</option>
-                            <option value="DG48">DG48</option>
-                            <option value="DG52">DG52</option>
-                            <option value="DG54">DG54</option>
+                            <option value="N11">N11</option>
+                            <option value="N14">N14</option>
+                            <option value="N19">N19</option>
+                            <option value="N22">N22</option>
+                            <option value="N26">N26</option>
+                            <option value="N29">N29</option>
+                            <option value="N32">N32</option>
+                            <option value="N36">N36</option>
+                            <option value="W19">W19</option>
+                            <option value="W22">W22</option>
+                            <option value="W26">W26</option>
+                            <option value="W29">W29</option>
+                            <option value="W32">W32</option>
+                            <option value="W36">W36</option>
+                            <option value="FA29">FA29</option>
+                            <option value="FT19">FT19</option>
+                            <option value="H11">H11</option>
                             <option value="KAFA">KAFA</option>
                             <option value="TAJ">TAJ</option>
                             <option value="S1">S1</option>
@@ -518,13 +525,14 @@
                     </div>
 
                     <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Pecahan Darjah (SAKNJ Sahaja)</p>
-                    <div class="grid grid-cols-3 md:grid-cols-6 gap-3">
+                    <div class="grid grid-cols-3 md:grid-cols-7 gap-3">
                         <div><label class="block text-[10px] font-bold text-slate-500 mb-1 text-center">Darjah 1</label><input type="number" id="s-d1" class="w-full px-2 py-1.5 rounded border border-slate-200 text-sm text-center focus:ring-2 focus:ring-emerald-500" /></div>
                         <div><label class="block text-[10px] font-bold text-slate-500 mb-1 text-center">Darjah 2</label><input type="number" id="s-d2" class="w-full px-2 py-1.5 rounded border border-slate-200 text-sm text-center focus:ring-2 focus:ring-emerald-500" /></div>
                         <div><label class="block text-[10px] font-bold text-slate-500 mb-1 text-center">Darjah 3</label><input type="number" id="s-d3" class="w-full px-2 py-1.5 rounded border border-slate-200 text-sm text-center focus:ring-2 focus:ring-emerald-500" /></div>
                         <div><label class="block text-[10px] font-bold text-slate-500 mb-1 text-center">Darjah 4</label><input type="number" id="s-d4" class="w-full px-2 py-1.5 rounded border border-slate-200 text-sm text-center focus:ring-2 focus:ring-emerald-500" /></div>
                         <div><label class="block text-[10px] font-bold text-slate-500 mb-1 text-center">Darjah 5</label><input type="number" id="s-d5" class="w-full px-2 py-1.5 rounded border border-slate-200 text-sm text-center focus:ring-2 focus:ring-emerald-500" /></div>
                         <div><label class="block text-[10px] font-bold text-slate-500 mb-1 text-center">Darjah 6</label><input type="number" id="s-d6" class="w-full px-2 py-1.5 rounded border border-slate-200 text-sm text-center focus:ring-2 focus:ring-emerald-500" /></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 mb-1 text-center whitespace-nowrap">Darjah Khas</label><input type="number" id="s-dKhas" class="w-full px-2 py-1.5 rounded border border-slate-200 text-sm text-center focus:ring-2 focus:ring-emerald-500" /></div>
                     </div>
                 </div>
             </div>
@@ -695,58 +703,58 @@
             return getCategoryLabel(c);
         };
 
-        const S = (id, nama, noDaftar, gred, alamat, zon, dun, parlimen, lokasi, statusBangunan, bilBilikDarjah, bilPejabat, tandasMurid, tandasGuru, pengawal, keluasan, statusOperasi, muridPagi, muridPetang, bilGuruTAJ=0, pengetua="", guruLelaki=0, guruPerempuan=0, muridLelaki=0, muridPerempuan=0, tarikhTamatDaftar="", statusDaftar="", catatan="", d1=0, d2=0, d3=0, d4=0, d5=0, d6=0, telefonSekolah="") => ({ id, nama, noDaftar, gred, alamat, zon, dun, parlimen, lokasi, statusBangunan, bilBilikDarjah, bilPejabat, tandasMurid, tandasGuru, pengawal, keluasan, statusOperasi, muridPagi, muridPetang, bilGuruTAJ, pengetua, guruLelaki, guruPerempuan, muridLelaki, muridPerempuan, tarikhTamatDaftar, statusDaftar, catatan, d1, d2, d3, d4, d5, d6, telefonSekolah });
+        const S = (id, nama, noDaftar, gred, alamat, zon, dun, parlimen, lokasi, statusBangunan, bilBilikDarjah, bilPejabat, tandasMurid, tandasGuru, pengawal, keluasan, statusOperasi, muridPagi, muridPetang, bilGuruTAJ=0, pengetua="", guruLelaki=0, guruPerempuan=0, muridLelaki=0, muridPerempuan=0, tarikhTamatDaftar="", statusDaftar="", catatan="", d1=0, d2=0, d3=0, d4=0, d5=0, d6=0, dKhas=0, telefonSekolah="") => ({ id, nama, noDaftar, gred, alamat, zon, dun, parlimen, lokasi, statusBangunan, bilBilikDarjah, bilPejabat, tandasMurid, tandasGuru, pengawal, keluasan, statusOperasi, muridPagi, muridPetang, bilGuruTAJ, pengetua, guruLelaki, guruPerempuan, muridLelaki, muridPerempuan, tarikhTamatDaftar, statusDaftar, catatan, d1, d2, d3, d4, d5, d6, dKhas, telefonSekolah });
 
         // Hardcoded 48 Schools Data + Private Institutions
         const initialSchoolData = [
-            S(1,"SA BUKIT TONGKAT","SAKNJ/KLG/06001","C","JALAN MAWAR, FELDA ULU BELITONG, 86000 KLUANG","1","KAHANG","SEMBRONG","FELDA ULU BELITONG","BANGUNAN GUNA SAMA",6,1,2,1,"TIADA","1.214 EKAR","Beroperasi",0,248,0,"",0,0,0,0,"","","",46,49,41,54,31,27),
-            S(2,"SA DATO' AHMAD","SAKNJ/KLG/06007","A","LOT 7762, JALAN JARAK, KG DATO' ABD RAHMAN YASSIN, 86000 KLUANG","1","MENGKIBOL","KLUANG","BANDAR","BANGUNAN SENDIRI",10,1,10,4,"ADA","5915 K/P","Beroperasi",516,684,0,"",0,0,0,0,"","","",194,213,197,262,159,175),
-            S(3,"SA FELDA KAHANG BARAT","SAKNJ/KLG/06002","C","JALAN MATA KUCING, FELDA KAHANG BARAT, 86000 KLUANG","1","KAHANG","SEMBRONG","FELDA","BANGUNAN SENDIRI",10,1,4,2,"ADA","0.366H","Beroperasi",0,215,0,"",0,0,0,0,"","","",37,35,36,34,42,31),
-            S(4,"SA FELDA KAHANG TIMUR","SAKNJ/KLG/06003","B","JALAN MURAI, 86000 KLUANG, JOHOR","1","KAHANG","SEMBRONG","FELDA KAHANG TIMUR","BANGUNAN GUNA SAMA",9,1,4,2,"TIADA","3 EKAR","Beroperasi",0,282,0,"",0,0,0,0,"","","",43,45,48,54,46,46),
-            S(5,"SA FELDA ULU BELITONG","SAKNJ/KLG/06004","C","JALAN MAWAR, FELDA ULU BELITONG 86000 KLUANG","1","KAHANG","SEMBRONG","FELDA","BANGUNAN SENDIRI",7,1,2,2,"ADA","2 EKAR","Beroperasi",0,335,0,"",0,0,0,0,"","","",51,58,70,49,48,59),
-            S(6,"SA FELDA ULU DENGAR","SAKNJ/KLG/06005","C","JALAN MELOR, FELDA ULU DENGAR, 86000 KLUANG","1","KAHANG","SEMBRONG","FELDA ULU DENGAR","BANGUNAN SENDIRI",3,1,2,2,"TIADA","1 EKAR","Beroperasi",0,126,0,"",0,0,0,0,"","","",16,21,27,25,23,14),
-            S(7,"SA FELDA ULU PENGGELI","SAKNJ/KLG/06006","C","JALAN RAJAWALI, FELDA ULU PENGGELI, 86000 KLUANG","1","KAHANG","SEMBRONG","FELDA ULU PENGGELI","BANGUNAN SENDIRI",4,1,2,2,"TIADA","0.5 EKAR","Beroperasi",0,196,0,"",0,0,0,0,"","","",42,31,44,27,33,19),
-            S(8,"SA KAHANG BATU 28","SAKNJ/KLG/06008","C","KM 45, JALAN MERSING, 86700 KAHANG, KLUANG","1","KAHANG","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",3,1,2,2,"TIADA","2 EKAR","Beroperasi",0,82,0,"",0,0,0,0,"","","",15,16,15,10,12,14),
-            S(9,"SA KAMPUNG CONTOH","SAKNJ/KLG/06009","C","KM 32, JALAN MERSING, 86700 KAHANG, KLUANG","1","KAHANG","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",4,1,2,2,"TIADA","1.5 EKAR","Beroperasi",0,117,0,"",0,0,0,0,"","","",24,23,16,25,17,12),
-            S(10,"SA KLUANG BARAT","SAKNJ/KLG/06012","B","PTD 78087 JALAN ADAM HUSSEIN KM 3 JALAN MERSING 86000 KLUANG","1","MAHKOTA","KLUANG","LUAR BANDAR","BANGUNAN SENDIRI",24,1,3,2,"TIADA","96485.40ft²","Beroperasi",353,329,0,"",0,0,0,0,"","","",116,143,101,154,105,63),
-            S(11,"SA LADANG MUTIARA","SAKNJ/KLG/06013","C","PETI SURAT 24, SEKOLAH AGAMA LADANG MUTIARA, 86700 KAHANG, KLUANG","1","KAHANG","SEMBRONG","LADANG","BANGUNAN GUNA SAMA",3,1,3,2,"ADA","2 EKAR","Beroperasi",23,35,0,"",0,0,0,0,"","","",11,10,11,11,6,9),
-            S(12,"SA LADANG PAMOL","SAKNJ/KLG/06014","C","BATU 8, JALAN MERSING 86000, KLUANG, JOHOR","1","PALOH","SEMBRONG","LADANG","BANGUNAN GUNA SAMA",7,1,4,4,"TIADA","3.5 EKAR","Beroperasi",99,98,0,"",0,0,0,0,"","","",27,39,36,43,29,23),
-            S(13,"SA SRI KAMPUNG TENGAH 01","SAKNJ/KLG/06010","A","BATU 3, JALAN MERSING 86000 KLUANG","1","MAHKOTA","KLUANG","BANDAR","BANGUNAN SENDIRI",18,1,4,4,"ADA","4 EKAR","Beroperasi",419,435,0,"",0,0,0,0,"","","",149,172,144,203,93,93),
-            S(14,"SA SRI KAMPUNG TENGAH 02","SAKNJ/KLG/06011","B","BATU 3, JALAN MERSING 86000 KLUANG","1","MAHKOTA","KLUANG","LUAR BANDAR","BANGUNAN SENDIRI",6,1,4,2,"ADA","3150M","Beroperasi",223,214,0,"",0,0,0,0,"","","",61,94,84,84,55,59),
-            S(15,"SA SULTAN SIR IBRAHIM","SAKNJ/KLG/06015","C","5 RAMD, KEM BATU, JALAN MERSING, 86000 KLUANG","1","MAHKOTA","KLUANG","BANDAR","BUKAN BANGUNAN SENDIRI",14,1,4,2,"ADA","0.2 EKAR","Beroperasi",59,49,0,"",0,0,0,0,"","","",32,19,19,14,15,9),
-            S(16,"SA TAMAN SRI LAMBAK","SAKNJ/KLG/06016","A","JALAN LINGKARAN, TAMAN SRI LAMBAK, 86000 KLUANG","1","PALOH","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",21,1,2,2,"ADA","3.27EKAR","Beroperasi",382,405,0,"",0,0,0,0,"","","",266,275,255,356,215,218),
-            S(17,"SA BANDAR KLUANG","SAKNJ/KLG/06020","A","JALAN HOSPITAL 86000 KLUANG","2","MAHKOTA","KLUANG","BANDAR","BANGUNAN SENDIRI",5,1,1,1,"ADA","4 EKAR","Beroperasi",593,624,0,"",0,0,0,0,"","","",204,197,226,225,174,191),
-            S(18,"SA BANDAR PALOH","SAKNJ/KLG/06022","C","JALAN YONG PENG, 86600 PALOH, KLUANG","2","PALOH","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",10,1,1,1,"ADA","1 EKAR","Beroperasi",0,116,0,"",0,0,0,0,"","","",21,23,19,25,15,13),
-            S(19,"SA BANDAR PALOH 02","SAKNJ/KLG/06023","C","D/A SEKOLAH KEBANGSAAN PALOH 2, JKRK 1787 86600, PALOH, KLUANG","2","PALOH","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",7,1,2,2,"ADA","2.2 EKAR","Beroperasi",46,47,0,"",0,0,0,0,"","","",10,17,19,26,9,12),
-            S(20,"SA FELDA AIR HITAM","SAKNJ/KLG/06018","C","BATU 8, JALAN SEKOLAH, 86000 KLUANG","2","MACHAP","SIMPANG RENGGAM","FELDA","BANGUNAN SENDIRI",7,1,2,2,"ADA","2.178 EKAR","Beroperasi",114,128,0,"",0,0,0,0,"","","",38,50,46,46,35,27),
-            S(21,"SA GUNUNG LAMBAK","SAKNJ/KLG/06024","B","KM 1.5, JALAN MERSING 86000 KLUANG","2","MAHKOTA","KLUANG","BANDAR","BANGUNAN SENDIRI",13,1,1,1,"ADA","1.477 EKAR","Beroperasi",325,315,0,"",0,0,0,0,"","","",112,112,136,132,76,72),
-            S(22,"SA KAMPUNG MELAYU CHAMEK","SAKNJ/KLG/06026","C","JALAN SEKOLAH, KAMPUNG MELAYU CHAMEK, 86700 KLUANG","2","PALOH","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",5,1,1,1,"ADA","1 EKAR","Beroperasi",54,62,0,"",0,0,0,0,"","","",20,13,23,23,24,13),
-            S(23,"SA KEM MAHKOTA","SAKNJ/KLG/06025","C","150, JALAN KITCHENER LINE, KEM MAHKOTA, 86000 KLUANG","2","MAHKOTA","KLUANG","BANDAR","BUKAN BANGUNAN SENDIRI",10,1,1,1,"ADA","4 EKAR","Beroperasi",168,160,0,"",0,0,0,0,"","","",61,75,54,59,46,33),
-            S(24,"SA LADANG BUKIT BENUT","SAKNJ/KLG/06027","C","P.O BOX 513 LADANG BUKIT BENUT, 86007 KLUANG","2","MENGKIBOL","KLUANG","LADANG","BANGUNAN SENDIRI",3,1,2,2,"ADA","14060K/P","Beroperasi",44,29,0,"",0,0,0,0,"","","",8,15,20,11,8,11),
-            S(25,"SA LADANG BUKIT PALOH","SAKNJ/KLG/06028","C","KAMPUNG MELAYU BATU 4, 86600 PALOH, KLUANG","2","PALOH","SEMBRONG","LADANG","BANGUNAN SENDIRI",5,1,2,2,"ADA","1.5 EKAR","Beroperasi",66,34,0,"",0,0,0,0,"","","",24,8,15,25,18,10),
-            S(26,"SA LADANG TEREH","SAKNJ/KLG/06029","C","KB 538, LADANG TEREH, 86009 KLUANG","2","KAHANG","SEMBRONG","LADANG","BUKAN BANGUNAN SENDIRI",3,1,2,2,"ADA","1.5 EKAR","Beroperasi",52,37,0,"",0,0,0,0,"","","",12,15,12,20,18,12),
-            S(27,"SA NIYOR","SAKNJ/KLG/06030","C","KAMPUNG MELAYU NIYOR, 86000 KLUANG","2","PALOH","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",3,1,2,2,"ADA","1 EKAR","Beroperasi",45,55,0,"",0,0,0,0,"","","",15,22,16,17,15,15),
-            S(28,"SA SERI TAMAN KLUANG BARAT","SAKNJ/KLG/06033","B","JALAN YULE CATTO, TAMAN KLUANG BARAT, 86000 KLUANG","2","MENGKIBOL","KLUANG","BANDAR","BANGUNAN SENDIRI",12,1,2,2,"ADA","19480.1m/p","Beroperasi",431,402,0,"",0,0,0,0,"","","",171,153,132,191,96,90),
-            S(29,"SA TAMAN DELIMA","SAKNJ/KLG/06032","B","TAMAN DELIMA 86000 KLUANG","2","MENGKIBOL","KLUANG","BANDAR","BANGUNAN SENDIRI",15,1,1,1,"ADA","2 EKAR","Beroperasi",590,538,0,"",0,0,0,0,"","","",202,184,191,229,183,139),
-            S(30,"SA SRI LALANG","SAKNJ/KLG/06017","C","BATU 6, JALAN BATU PAHAT, 86000 KLUANG","2","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",8,1,4,4,"ADA","3548.63k/p","Beroperasi",171,152,0,"",0,0,0,0,"","","",68,70,64,56,38,27),
-            S(31,"SA TAMAN DESA","SAKNJ/KLG/06034","C","JALAN 9/5, TAMAN DESA, 86000 KLUANG","2","MENGKIBOL","KLUANG","BANDAR","BANGUNAN SENDIRI",6,1,2,1,"ADA","2667.1m/p","Beroperasi",138,113,0,"",0,0,0,0,"","","",33,44,51,51,36,36),
-            S(32,"SA BANDAR RENGGAM","SAKNJ/KLG/06035","C","JALAN BUKIT, 86300 RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",5,1,1,1,"ADA","0.5 EKAR","Beroperasi",82,79,0,"",0,0,0,0,"","","",22,29,38,27,29,16),
-            S(33,"SA BUKIT KENANGAN","SAKNJ/KLG/06036","C","BATU 41, JALAN JOHOR, KAMPUNG BUKIT KENANGAN, 86200 SIMPANG RENGGAM, KLUANG","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",4,1,2,1,"ADA","0.25 EKAR","Beroperasi",45,41,0,"",0,0,0,0,"","","",17,16,15,21,10,7),
-            S(34,"SA DATO' IBRAHIM MAJID","SAKNJ/KLG/06037","B","KM 8, JALAN BENUT, 86200 SIMPANG RENGGAM, KLUANG","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",11,1,1,1,"ADA","2.561 EKAR","Beroperasi",307,282,0,"",0,0,0,0,"","","",105,97,108,111,95,73),
-            S(35,"SA FELDA LAYANG-LAYANG","SAKNJ/KLG/06038","C","PTD 4841, FELDA LAYANG-LAYANG 86200 SIMPANG RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LADANG","BANGUNAN SENDIRI",4,1,2,2,"ADA","1 EKAR","Beroperasi",70,62,0,"",0,0,0,0,"","","",29,18,23,38,13,11),
-            S(36,"SA KOMPLEKS PENGHULU","SAKNJ/KLG/06039","B","BATU 7, JALAN RENGGAM, 86200 SIMPANG RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",11,1,2,2,"ADA","1.5 EKAR","Beroperasi",249,232,0,"",0,0,0,0,"","","",81,87,79,96,82,56),
-            S(37,"SA LADANG ULU REMIS","SAKNJ/KLG/06041","C","LADANG ULU REMIS, 81850 LAYANG-LAYANG, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LADANG","BANGUNAN SENDIRI",4,1,6,6,"ADA","2.038 EKAR","Beroperasi",32,23,0,"",0,0,0,0,"","","",9,12,10,15,4,5),
-            S(38,"SA PARIT HAJI HASHIM","SAKNJ/KLG/06045","B","NO 1, KAMPUNG PARIT HAJI HASHIM, 86200 SIMPANG RENGGAM, KLUANG","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",10,1,2,2,"ADA","2 EKAR","Beroperasi",189,191,0,"",0,0,0,0,"","","",66,69,62,64,67,52),
-            S(39,"SA PASUKAN GERAKAN AM","SAKNJ/KLG/06044","C","KEM PASUKAN GERAKAN AM (PGA) BATALION 5, 86200 SIMPANG RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BUKAN BANGUNAN SENDIRI",4,1,2,2,"ADA","1 EKAR","Beroperasi",65,79,0,"",0,0,0,0,"","","",35,15,24,27,23,20),
-            S(40,"SA PEKAN LAYANG-LAYANG","SAKNJ/KLG/06042","C","LOT PTD 4841, JALAN KAMPUNG TENGAH, 81850 LAYANG-LAYANG, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",11,1,2,1,"ADA","402336M","Beroperasi",158,139,0,"",0,0,0,0,"","","",54,54,51,70,50,18),
-            S(41,"SA PENJARA SIMPANG RENGAM","SAKNJ/KLG/06041","C","PENJARA SIMPANG RENGGAM, 86200 KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",3,1,1,1,"ADA","1 EKAR","Beroperasi",54,54,0,"",0,0,0,0,"","","",22,22,17,14,17,16),
-            S(42,"SA SIMPANG RENGAM","SAKNJ/KLG/06046","B","JALAN RENGGAM, 86200 SIMPANG RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",11,1,1,1,"ADA","2.088 EKAR","Beroperasi",325,317,0,"",0,0,0,0,"","","",100,119,111,148,94,70),
-            S(43,"SA SRI KENCANA","SAKNJ/KLG/0608","C","KAMPUNG MOHD AMIN, 86200 SIMPANG RENGGAM, KLUANG","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",6,1,2,2,"ADA","2 EKAR","Beroperasi",141,119,0,"",0,0,0,0,"","","",48,46,46,56,33,31),
-            S(44,"SA SRI MACAP","SAKNJ/KLG/06049","C","JALAN SEKOLAH, KAMPUNG SRI MACAP, 86200 SIMPANG RENGGAM, KLUANG","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",7,1,2,2,"ADA","1.338 EKAR","Beroperasi",152,161,0,"",0,0,0,0,"","","",38,55,62,71,51,36),
-            S(45,"SA SRI MAJU JAYA","SAKNJ/KLG/06045","C","NO POS 38, KAMPUNG SRI MAJU JAYA, BATU 54, MACHAP DALAM, 86100 AIR HITAM","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",5,1,2,2,"ADA","1/4 EKAR","Beroperasi",97,90,0,"",0,0,0,0,"","","",40,27,30,47,30,13),
-            S(46,"SA SRI TENGAH RENGGAM","SAKNJ/KLG/06051","C","KAMPUNG TENGAH RENGGAM, 86300, RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",3,1,2,2,"ADA","20800K/P","Beroperasi",31,31,0,"",0,0,0,0,"","","",10,12,8,13,11,8),
-            S(47,"SA SUNGAI LINAU","SAKNJ/KLG/06047","C","KAMPUNG PARIT 4B SUNGAI LINAU, 86200 SIMPANG RENGGAM","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",1,1,1,2,"ADA","1 SUKU EKAR","Beroperasi",77,91,0,"",0,0,0,0,"","","",30,30,31,36,24,17),
-            S(48,"SRAB KLUANG","SAKNJ/KLG/06031","C","TAMAN INTAN 86000 KLUANG","2","MENGKIBOL","KLUANG","BANDAR","BANGUNAN SENDIRI",12,1,4,4,"ADA","6486.93m3","Beroperasi",231,227,0,"",0,0,0,0,"","","",80,80,80,80,76,62),
+            S(1,"SA BUKIT TONGKAT","SAKNJ/KLG/06001","C","JALAN MAWAR, FELDA ULU BELITONG, 86000 KLUANG","1","KAHANG","SEMBRONG","FELDA ULU BELITONG","BANGUNAN GUNA SAMA",6,1,2,1,"TIADA","1.214 EKAR","Beroperasi",0,248,0,"",0,0,0,0,"","","",46,49,41,54,31,27,0),
+            S(2,"SA DATO' AHMAD","SAKNJ/KLG/06007","A","LOT 7762, JALAN JARAK, KG DATO' ABD RAHMAN YASSIN, 86000 KLUANG","1","MENGKIBOL","KLUANG","BANDAR","BANGUNAN SENDIRI",10,1,10,4,"ADA","5915 K/P","Beroperasi",516,684,0,"",0,0,0,0,"","","",194,213,197,262,159,175,0),
+            S(3,"SA FELDA KAHANG BARAT","SAKNJ/KLG/06002","C","JALAN MATA KUCING, FELDA KAHANG BARAT, 86000 KLUANG","1","KAHANG","SEMBRONG","FELDA","BANGUNAN SENDIRI",10,1,4,2,"ADA","0.366H","Beroperasi",0,215,0,"",0,0,0,0,"","","",37,35,36,34,42,31,0),
+            S(4,"SA FELDA KAHANG TIMUR","SAKNJ/KLG/06003","B","JALAN MURAI, 86000 KLUANG, JOHOR","1","KAHANG","SEMBRONG","FELDA KAHANG TIMUR","BANGUNAN GUNA SAMA",9,1,4,2,"TIADA","3 EKAR","Beroperasi",0,282,0,"",0,0,0,0,"","","",43,45,48,54,46,46,0),
+            S(5,"SA FELDA ULU BELITONG","SAKNJ/KLG/06004","C","JALAN MAWAR, FELDA ULU BELITONG 86000 KLUANG","1","KAHANG","SEMBRONG","FELDA","BANGUNAN SENDIRI",7,1,2,2,"ADA","2 EKAR","Beroperasi",0,335,0,"",0,0,0,0,"","","",51,58,70,49,48,59,0),
+            S(6,"SA FELDA ULU DENGAR","SAKNJ/KLG/06005","C","JALAN MELOR, FELDA ULU DENGAR, 86000 KLUANG","1","KAHANG","SEMBRONG","FELDA ULU DENGAR","BANGUNAN SENDIRI",3,1,2,2,"TIADA","1 EKAR","Beroperasi",0,126,0,"",0,0,0,0,"","","",16,21,27,25,23,14,0),
+            S(7,"SA FELDA ULU PENGGELI","SAKNJ/KLG/06006","C","JALAN RAJAWALI, FELDA ULU PENGGELI, 86000 KLUANG","1","KAHANG","SEMBRONG","FELDA ULU PENGGELI","BANGUNAN SENDIRI",4,1,2,2,"TIADA","0.5 EKAR","Beroperasi",0,196,0,"",0,0,0,0,"","","",42,31,44,27,33,19,0),
+            S(8,"SA KAHANG BATU 28","SAKNJ/KLG/06008","C","KM 45, JALAN MERSING, 86700 KAHANG, KLUANG","1","KAHANG","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",3,1,2,2,"TIADA","2 EKAR","Beroperasi",0,82,0,"",0,0,0,0,"","","",15,16,15,10,12,14,0),
+            S(9,"SA KAMPUNG CONTOH","SAKNJ/KLG/06009","C","KM 32, JALAN MERSING, 86700 KAHANG, KLUANG","1","KAHANG","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",4,1,2,2,"TIADA","1.5 EKAR","Beroperasi",0,117,0,"",0,0,0,0,"","","",24,23,16,25,17,12,0),
+            S(10,"SA KLUANG BARAT","SAKNJ/KLG/06012","B","PTD 78087 JALAN ADAM HUSSEIN KM 3 JALAN MERSING 86000 KLUANG","1","MAHKOTA","KLUANG","LUAR BANDAR","BANGUNAN SENDIRI",24,1,3,2,"TIADA","96485.40ft²","Beroperasi",353,329,0,"",0,0,0,0,"","","",116,143,101,154,105,63,0),
+            S(11,"SA LADANG MUTIARA","SAKNJ/KLG/06013","C","PETI SURAT 24, SEKOLAH AGAMA LADANG MUTIARA, 86700 KAHANG, KLUANG","1","KAHANG","SEMBRONG","LADANG","BANGUNAN GUNA SAMA",3,1,3,2,"ADA","2 EKAR","Beroperasi",23,35,0,"",0,0,0,0,"","","",11,10,11,11,6,9,0),
+            S(12,"SA LADANG PAMOL","SAKNJ/KLG/06014","C","BATU 8, JALAN MERSING 86000, KLUANG, JOHOR","1","PALOH","SEMBRONG","LADANG","BANGUNAN GUNA SAMA",7,1,4,4,"TIADA","3.5 EKAR","Beroperasi",99,98,0,"",0,0,0,0,"","","",27,39,36,43,29,23,0),
+            S(13,"SA SRI KAMPUNG TENGAH 01","SAKNJ/KLG/06010","A","BATU 3, JALAN MERSING 86000 KLUANG","1","MAHKOTA","KLUANG","BANDAR","BANGUNAN SENDIRI",18,1,4,4,"ADA","4 EKAR","Beroperasi",419,435,0,"",0,0,0,0,"","","",149,172,144,203,93,93,0),
+            S(14,"SA SRI KAMPUNG TENGAH 02","SAKNJ/KLG/06011","B","BATU 3, JALAN MERSING 86000 KLUANG","1","MAHKOTA","KLUANG","LUAR BANDAR","BANGUNAN SENDIRI",6,1,4,2,"ADA","3150M","Beroperasi",223,214,0,"",0,0,0,0,"","","",61,94,84,84,55,59,0),
+            S(15,"SA SULTAN SIR IBRAHIM","SAKNJ/KLG/06015","C","5 RAMD, KEM BATU, JALAN MERSING, 86000 KLUANG","1","MAHKOTA","KLUANG","BANDAR","BUKAN BANGUNAN SENDIRI",14,1,4,2,"ADA","0.2 EKAR","Beroperasi",59,49,0,"",0,0,0,0,"","","",32,19,19,14,15,9,0),
+            S(16,"SA TAMAN SRI LAMBAK","SAKNJ/KLG/06016","A","JALAN LINGKARAN, TAMAN SRI LAMBAK, 86000 KLUANG","1","PALOH","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",21,1,2,2,"ADA","3.27EKAR","Beroperasi",382,405,0,"",0,0,0,0,"","","",266,275,255,356,215,218,0),
+            S(17,"SA BANDAR KLUANG","SAKNJ/KLG/06020","A","JALAN HOSPITAL 86000 KLUANG","2","MAHKOTA","KLUANG","BANDAR","BANGUNAN SENDIRI",5,1,1,1,"ADA","4 EKAR","Beroperasi",593,624,0,"",0,0,0,0,"","","",204,197,226,225,174,191,0),
+            S(18,"SA BANDAR PALOH","SAKNJ/KLG/06022","C","JALAN YONG PENG, 86600 PALOH, KLUANG","2","PALOH","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",10,1,1,1,"ADA","1 EKAR","Beroperasi",0,116,0,"",0,0,0,0,"","","",21,23,19,25,15,13,0),
+            S(19,"SA BANDAR PALOH 02","SAKNJ/KLG/06023","C","D/A SEKOLAH KEBANGSAAN PALOH 2, JKRK 1787 86600, PALOH, KLUANG","2","PALOH","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",7,1,2,2,"ADA","2.2 EKAR","Beroperasi",46,47,0,"",0,0,0,0,"","","",10,17,19,26,9,12,0),
+            S(20,"SA FELDA AIR HITAM","SAKNJ/KLG/06018","C","BATU 8, JALAN SEKOLAH, 86000 KLUANG","2","MACHAP","SIMPANG RENGGAM","FELDA","BANGUNAN SENDIRI",7,1,2,2,"ADA","2.178 EKAR","Beroperasi",114,128,0,"",0,0,0,0,"","","",38,50,46,46,35,27,0),
+            S(21,"SA GUNUNG LAMBAK","SAKNJ/KLG/06024","B","KM 1.5, JALAN MERSING 86000 KLUANG","2","MAHKOTA","KLUANG","BANDAR","BANGUNAN SENDIRI",13,1,1,1,"ADA","1.477 EKAR","Beroperasi",325,315,0,"",0,0,0,0,"","","",112,112,136,132,76,72,0),
+            S(22,"SA KAMPUNG MELAYU CHAMEK","SAKNJ/KLG/06026","C","JALAN SEKOLAH, KAMPUNG MELAYU CHAMEK, 86700 KLUANG","2","PALOH","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",5,1,1,1,"ADA","1 EKAR","Beroperasi",54,62,0,"",0,0,0,0,"","","",20,13,23,23,24,13,0),
+            S(23,"SA KEM MAHKOTA","SAKNJ/KLG/06025","C","150, JALAN KITCHENER LINE, KEM MAHKOTA, 86000 KLUANG","2","MAHKOTA","KLUANG","BANDAR","BUKAN BANGUNAN SENDIRI",10,1,1,1,"ADA","4 EKAR","Beroperasi",168,160,0,"",0,0,0,0,"","","",61,75,54,59,46,33,0),
+            S(24,"SA LADANG BUKIT BENUT","SAKNJ/KLG/06027","C","P.O BOX 513 LADANG BUKIT BENUT, 86007 KLUANG","2","MENGKIBOL","KLUANG","LADANG","BANGUNAN SENDIRI",3,1,2,2,"ADA","14060K/P","Beroperasi",44,29,0,"",0,0,0,0,"","","",8,15,20,11,8,11,0),
+            S(25,"SA LADANG BUKIT PALOH","SAKNJ/KLG/06028","C","KAMPUNG MELAYU BATU 4, 86600 PALOH, KLUANG","2","PALOH","SEMBRONG","LADANG","BANGUNAN SENDIRI",5,1,2,2,"ADA","1.5 EKAR","Beroperasi",66,34,0,"",0,0,0,0,"","","",24,8,15,25,18,10,0),
+            S(26,"SA LADANG TEREH","SAKNJ/KLG/06029","C","KB 538, LADANG TEREH, 86009 KLUANG","2","KAHANG","SEMBRONG","LADANG","BUKAN BANGUNAN SENDIRI",3,1,2,2,"ADA","1.5 EKAR","Beroperasi",52,37,0,"",0,0,0,0,"","","",12,15,12,20,18,12,0),
+            S(27,"SA NIYOR","SAKNJ/KLG/06030","C","KAMPUNG MELAYU NIYOR, 86000 KLUANG","2","PALOH","SEMBRONG","LUAR BANDAR","BANGUNAN SENDIRI",3,1,2,2,"ADA","1 EKAR","Beroperasi",45,55,0,"",0,0,0,0,"","","",15,22,16,17,15,15,0),
+            S(28,"SA SERI TAMAN KLUANG BARAT","SAKNJ/KLG/06033","B","JALAN YULE CATTO, TAMAN KLUANG BARAT, 86000 KLUANG","2","MENGKIBOL","KLUANG","BANDAR","BANGUNAN SENDIRI",12,1,2,2,"ADA","19480.1m/p","Beroperasi",431,402,0,"",0,0,0,0,"","","",171,153,132,191,96,90,0),
+            S(29,"SA TAMAN DELIMA","SAKNJ/KLG/06032","B","TAMAN DELIMA 86000 KLUANG","2","MENGKIBOL","KLUANG","BANDAR","BANGUNAN SENDIRI",15,1,1,1,"ADA","2 EKAR","Beroperasi",590,538,0,"",0,0,0,0,"","","",202,184,191,229,183,139,0),
+            S(30,"SA SRI LALANG","SAKNJ/KLG/06017","C","BATU 6, JALAN BATU PAHAT, 86000 KLUANG","2","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",8,1,4,4,"ADA","3548.63k/p","Beroperasi",171,152,0,"",0,0,0,0,"","","",68,70,64,56,38,27,0),
+            S(31,"SA TAMAN DESA","SAKNJ/KLG/06034","C","JALAN 9/5, TAMAN DESA, 86000 KLUANG","2","MENGKIBOL","KLUANG","BANDAR","BANGUNAN SENDIRI",6,1,2,1,"ADA","2667.1m/p","Beroperasi",138,113,0,"",0,0,0,0,"","","",33,44,51,51,36,36,0),
+            S(32,"SA BANDAR RENGGAM","SAKNJ/KLG/06035","C","JALAN BUKIT, 86300 RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",5,1,1,1,"ADA","0.5 EKAR","Beroperasi",82,79,0,"",0,0,0,0,"","","",22,29,38,27,29,16,0),
+            S(33,"SA BUKIT KENANGAN","SAKNJ/KLG/06036","C","BATU 41, JALAN JOHOR, KAMPUNG BUKIT KENANGAN, 86200 SIMPANG RENGGAM, KLUANG","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",4,1,2,1,"ADA","0.25 EKAR","Beroperasi",45,41,0,"",0,0,0,0,"","","",17,16,15,21,10,7,0),
+            S(34,"SA DATO' IBRAHIM MAJID","SAKNJ/KLG/06037","B","KM 8, JALAN BENUT, 86200 SIMPANG RENGGAM, KLUANG","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",11,1,1,1,"ADA","2.561 EKAR","Beroperasi",307,282,0,"",0,0,0,0,"","","",105,97,108,111,95,73,0),
+            S(35,"SA FELDA LAYANG-LAYANG","SAKNJ/KLG/06038","C","PTD 4841, FELDA LAYANG-LAYANG 86200 SIMPANG RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LADANG","BANGUNAN SENDIRI",4,1,2,2,"ADA","1 EKAR","Beroperasi",70,62,0,"",0,0,0,0,"","","",29,18,23,38,13,11,0),
+            S(36,"SA KOMPLEKS PENGHULU","SAKNJ/KLG/06039","B","BATU 7, JALAN RENGGAM, 86200 SIMPANG RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",11,1,2,2,"ADA","1.5 EKAR","Beroperasi",249,232,0,"",0,0,0,0,"","","",81,87,79,96,82,56,0),
+            S(37,"SA LADANG ULU REMIS","SAKNJ/KLG/06041","C","LADANG ULU REMIS, 81850 LAYANG-LAYANG, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LADANG","BANGUNAN SENDIRI",4,1,6,6,"ADA","2.038 EKAR","Beroperasi",32,23,0,"",0,0,0,0,"","","",9,12,10,15,4,5,0),
+            S(38,"SA PARIT HAJI HASHIM","SAKNJ/KLG/06045","B","NO 1, KAMPUNG PARIT HAJI HASHIM, 86200 SIMPANG RENGGAM, KLUANG","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",10,1,2,2,"ADA","2 EKAR","Beroperasi",189,191,0,"",0,0,0,0,"","","",66,69,62,64,67,52,0),
+            S(39,"SA PASUKAN GERAKAN AM","SAKNJ/KLG/06044","C","KEM PASUKAN GERAKAN AM (PGA) BATALION 5, 86200 SIMPANG RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BUKAN BANGUNAN SENDIRI",4,1,2,2,"ADA","1 EKAR","Beroperasi",65,79,0,"",0,0,0,0,"","","",35,15,24,27,23,20,0),
+            S(40,"SA PEKAN LAYANG-LAYANG","SAKNJ/KLG/06042","C","LOT PTD 4841, JALAN KAMPUNG TENGAH, 81850 LAYANG-LAYANG, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",11,1,2,1,"ADA","402336M","Beroperasi",158,139,0,"",0,0,0,0,"","","",54,54,51,70,50,18,0),
+            S(41,"SA PENJARA SIMPANG RENGAM","SAKNJ/KLG/06041","C","PENJARA SIMPANG RENGGAM, 86200 KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",3,1,1,1,"ADA","1 EKAR","Beroperasi",54,54,0,"",0,0,0,0,"","","",22,22,17,14,17,16,0),
+            S(42,"SA SIMPANG RENGAM","SAKNJ/KLG/06046","B","JALAN RENGGAM, 86200 SIMPANG RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",11,1,1,1,"ADA","2.088 EKAR","Beroperasi",325,317,0,"",0,0,0,0,"","","",100,119,111,148,94,70,0),
+            S(43,"SA SRI KENCANA","SAKNJ/KLG/0608","C","KAMPUNG MOHD AMIN, 86200 SIMPANG RENGGAM, KLUANG","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",6,1,2,2,"ADA","2 EKAR","Beroperasi",141,119,0,"",0,0,0,0,"","","",48,46,46,56,33,31,0),
+            S(44,"SA SRI MACAP","SAKNJ/KLG/06049","C","JALAN SEKOLAH, KAMPUNG SRI MACAP, 86200 SIMPANG RENGGAM, KLUANG","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",7,1,2,2,"ADA","1.338 EKAR","Beroperasi",152,161,0,"",0,0,0,0,"","","",38,55,62,71,51,36,0),
+            S(45,"SA SRI MAJU JAYA","SAKNJ/KLG/06045","C","NO POS 38, KAMPUNG SRI MAJU JAYA, BATU 54, MACHAP DALAM, 86100 AIR HITAM","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",5,1,2,2,"ADA","1/4 EKAR","Beroperasi",97,90,0,"",0,0,0,0,"","","",40,27,30,47,30,13,0),
+            S(46,"SA SRI TENGAH RENGGAM","SAKNJ/KLG/06051","C","KAMPUNG TENGAH RENGGAM, 86300, RENGGAM, KLUANG","3","LAYANG-LAYANG","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",3,1,2,2,"ADA","20800K/P","Beroperasi",31,31,0,"",0,0,0,0,"","","",10,12,8,13,11,8,0),
+            S(47,"SA SUNGAI LINAU","SAKNJ/KLG/06047","C","KAMPUNG PARIT 4B SUNGAI LINAU, 86200 SIMPANG RENGGAM","3","MACHAP","SIMPANG RENGGAM","LUAR BANDAR","BANGUNAN SENDIRI",1,1,1,2,"ADA","1 SUKU EKAR","Beroperasi",77,91,0,"",0,0,0,0,"","","",30,30,31,36,24,17,0),
+            S(48,"SRAB KLUANG","SAKNJ/KLG/06031","C","TAMAN INTAN 86000 KLUANG","2","MENGKIBOL","KLUANG","BANDAR","BANGUNAN SENDIRI",12,1,4,4,"ADA","6486.93m3","Beroperasi",231,227,0,"",0,0,0,0,"","","",80,80,80,80,76,62,0),
 
             S(49,"MAAHAD TAHFIZ AL-QURAN FATTABI'UNI","MTS/KLG/018","TAHFIZ","LOT 5889 RANCANGAN BATU 56/57, JALAN JOHOR BAHRU","3","MACHAP","SIMPANG RENGGAM","SWASTA","SWASTA",0,0,0,0,"TIADA","N/A","Beroperasi",0,0,0,"",0,0,0,0,"30/11/2028","BERDAFTAR PENUH","LULUS 5 TAHUN"),
             S(50,"MAAHAD TAHFIZ MIFTAHUL NAJAH","MTS/KLG/023","TAHFIZ","NO 4 JALAN PALOH, TAMAN PERKASA 86000","2","MENGKIBOL","KLUANG","SWASTA","SWASTA",0,0,0,0,"TIADA","N/A","Beroperasi",0,0,0,"",0,0,0,0,"24/02/2030","BERDAFTAR PENUH","LULUS 5 TAHUN"),
@@ -1390,6 +1398,7 @@
             d4: { label: "Darjah 4", get: s => s.d4 || 0 },
             d5: { label: "Darjah 5", get: s => s.d5 || 0 },
             d6: { label: "Darjah 6", get: s => s.d6 || 0 },
+            dKhas: { label: "Darjah Khas", get: s => s.dKhas || 0 },
             muridPagi: { label: "Murid Pagi / L", get: s => (Number(s.muridPagi) || 0) + (Number(s.muridLelaki) || 0) },
             muridPetang: { label: "Murid Petang / P", get: s => (Number(s.muridPetang) || 0) + (Number(s.muridPerempuan) || 0) },
             jumlahMurid: { label: "Bilangan Murid", get: s => (Number(s.muridPagi) || 0) + (Number(s.muridPetang) || 0) + (Number(s.muridLelaki) || 0) + (Number(s.muridPerempuan) || 0) },
@@ -2412,14 +2421,15 @@
             } else if (isSaknj) {
                 html += `
                 <div class="mt-6 bg-emerald-50/50 p-4 md:p-6 rounded-xl border border-emerald-100">
-                    <h4 class="text-xs font-extrabold text-emerald-700 uppercase tracking-wider mb-4 border-b border-emerald-100 pb-2 flex items-center gap-2"><i data-lucide="bar-chart" class="w-4 h-4"></i> Pecahan Murid (Darjah 1 - 6)</h4>
-                    <div class="grid grid-cols-3 md:grid-cols-6 gap-3 text-center">
+                    <h4 class="text-xs font-extrabold text-emerald-700 uppercase tracking-wider mb-4 border-b border-emerald-100 pb-2 flex items-center gap-2"><i data-lucide="bar-chart" class="w-4 h-4"></i> Pecahan Murid (Darjah 1 - 6 & Khas)</h4>
+                    <div class="grid grid-cols-3 md:grid-cols-7 gap-3 text-center">
                         <div class="bg-white p-3 rounded-lg border border-emerald-100 shadow-sm"><div class="text-[10px] text-slate-400 font-bold uppercase mb-1">Darjah 1</div><div class="font-bold text-lg text-emerald-800">${s.d1 || 0}</div></div>
                         <div class="bg-white p-3 rounded-lg border border-emerald-100 shadow-sm"><div class="text-[10px] text-slate-400 font-bold uppercase mb-1">Darjah 2</div><div class="font-bold text-lg text-emerald-800">${s.d2 || 0}</div></div>
                         <div class="bg-white p-3 rounded-lg border border-emerald-100 shadow-sm"><div class="text-[10px] text-slate-400 font-bold uppercase mb-1">Darjah 3</div><div class="font-bold text-lg text-emerald-800">${s.d3 || 0}</div></div>
                         <div class="bg-white p-3 rounded-lg border border-emerald-100 shadow-sm"><div class="text-[10px] text-slate-400 font-bold uppercase mb-1">Darjah 4</div><div class="font-bold text-lg text-emerald-800">${s.d4 || 0}</div></div>
                         <div class="bg-white p-3 rounded-lg border border-emerald-100 shadow-sm"><div class="text-[10px] text-slate-400 font-bold uppercase mb-1">Darjah 5</div><div class="font-bold text-lg text-emerald-800">${s.d5 || 0}</div></div>
                         <div class="bg-white p-3 rounded-lg border border-emerald-100 shadow-sm"><div class="text-[10px] text-slate-400 font-bold uppercase mb-1">Darjah 6</div><div class="font-bold text-lg text-emerald-800">${s.d6 || 0}</div></div>
+                        <div class="bg-white p-3 rounded-lg border border-emerald-100 shadow-sm"><div class="text-[10px] text-slate-400 font-bold uppercase mb-1 whitespace-nowrap">Darjah Khas</div><div class="font-bold text-lg text-emerald-800">${s.dKhas || 0}</div></div>
                     </div>
                 </div>`;
             }
@@ -2522,6 +2532,7 @@
                     document.getElementById('s-d4').value = s.d4 || 0;
                     document.getElementById('s-d5').value = s.d5 || 0;
                     document.getElementById('s-d6').value = s.d6 || 0;
+                    document.getElementById('s-dKhas').value = s.dKhas || 0;
                 }
             }
             document.getElementById('modal-school').classList.remove('hidden');
@@ -2569,6 +2580,7 @@
                 parseInt(document.getElementById('s-d4').value)||0,
                 parseInt(document.getElementById('s-d5').value)||0,
                 parseInt(document.getElementById('s-d6').value)||0,
+                parseInt(document.getElementById('s-dKhas').value)||0,
                 document.getElementById('s-telefon').value
             );
 
@@ -2689,8 +2701,8 @@
                     document.getElementById('t-jantina').value = determinedGender;
                     
                     document.getElementById('t-ic').value = t.ic || '';
-                    document.getElementById('t-email').value = t.email || '';
-                    document.getElementById('t-telefon').value = t.telefon || '';
+                    document.getElementById('t-email').value = t.email && t.email !== '-' ? t.email : '';
+                    document.getElementById('t-telefon').value = t.telefon && t.telefon !== '-' ? t.telefon : '';
                     
                     // Kalis ejaan untuk Gred dan Jawatan
                     document.getElementById('t-gred').value = (t.gred || '').toUpperCase();
@@ -3022,7 +3034,7 @@
                             let val = values[index];
                             if (isSchools) {
                                 // Convert numeric values back to Number format for Math logic to work
-                                const numFields = ['id', 'bilBilikDarjah', 'bilPejabat', 'tandasMurid', 'tandasGuru', 'muridPagi', 'muridPetang', 'bilGuruTAJ', 'guruLelaki', 'guruPerempuan', 'muridLelaki', 'muridPerempuan', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6'];
+                                const numFields = ['id', 'bilBilikDarjah', 'bilPejabat', 'tandasMurid', 'tandasGuru', 'muridPagi', 'muridPetang', 'bilGuruTAJ', 'guruLelaki', 'guruPerempuan', 'muridLelaki', 'muridPerempuan', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'dKhas'];
                                 if (numFields.includes(header) && val !== "" && !isNaN(val)) {
                                     val = Number(val);
                                 }
