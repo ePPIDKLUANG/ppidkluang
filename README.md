@@ -27,11 +27,9 @@ Sebelum memulakan, pastikan perisian berikut telah dipasang pada komputer anda:
 2. **Pegawai PPID (Pentadbir):** Memproses permohonan dan mengemas kini status.
 3. **Pengurusan Tertinggi:** Melihat laporan dan statistik keseluruhan.
 
-## 🔒 Lesen
-Projek ini dilesenkan di bawah Lesen MIT - lihat fail [LICENSE](LICENSE) untuk maklumat lanjut.
 
 ## 📞 Hubungi
 Untuk sebarang pertanyaan atau laporan pepijat (bugs), sila hubungi:
 * **Nama:** Unit ICT PPID Kluang
 * **Emel:** admin@ppidkluang.com
-* Laman Web: [Laman Web](https://ppidkluang.com)
+* **Laman Web: [Laman Web](https://ppidkluang.com)
