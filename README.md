@@ -34,4 +34,4 @@ Projek ini dilesenkan di bawah Lesen MIT - lihat fail [LICENSE](LICENSE) untuk m
 Untuk sebarang pertanyaan atau laporan pepijat (bugs), sila hubungi:
 * **Nama:** Unit ICT PPID Kluang
 * **Emel:** admin@ppidkluang.com
-* [Laman Web](https://ppidkluang.com)
+* Laman Web: [Laman Web](https://ppidkluang.com)
