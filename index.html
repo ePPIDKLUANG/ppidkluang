@@ -319,7 +319,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">Kad Pengenalan</label>
-                        <input required type="text" id="t-ic" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white shadow-sm font-mono" placeholder="Contoh: 880101-01-1234" />
+                        <input required type="text" id="t-ic" oninput="autoDetectUmur()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white shadow-sm font-mono" placeholder="Contoh: 880101-01-1234" />
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -331,6 +331,11 @@
                         <label class="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">No. Telefon</label>
                         <input type="text" id="t-telefon" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white shadow-sm font-mono" placeholder="01X-XXXXXXX" />
                     </div>
+                </div>
+                <!-- Menambah paparan Umur Automatik -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">Umur Semasa (Kiraan Automatik IC)</label>
+                    <input type="text" id="t-umur-display" readonly disabled class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-500 bg-slate-100 font-bold" placeholder="Umur akan dikira dari Kad Pengenalan" />
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
@@ -688,6 +693,57 @@
                 jantinaSelect.value = 'Perempuan';
             } else if (nama.includes(' BIN ')) {
                 jantinaSelect.value = 'Lelaki';
+            }
+        };
+
+        // Fungsi mengira umur dari nombor IC
+        const kiraUmurDariIC = (icString) => {
+            if (!icString) return null;
+            // Buang semua character selain nombor
+            const cleanIC = icString.replace(/[^0-9]/g, '');
+            if (cleanIC.length < 6) return null; // Tak cukup panjang untuk teka tahun
+
+            let yearPrefix = parseInt(cleanIC.substring(0, 2), 10);
+            
+            // Logik Tahun: Jika dua digit terawal 00-24, anggap tahun 2000+. Jika 25-99, anggap 1900+
+            // Ini bergantung kepada tahun semasa, secara asasnya kita andaikan guru belum lahir pada tahun akan datang.
+            // Tahun semasa dalam konteks sistem ini ialah 2026.
+            const currentYear = new Date().getFullYear();
+            const yearPart = currentYear % 100; // Contoh 2026 -> 26
+            
+            let fullYear;
+            if (yearPrefix <= yearPart) {
+                 fullYear = 2000 + yearPrefix;
+            } else {
+                 fullYear = 1900 + yearPrefix;
+            }
+
+            const month = parseInt(cleanIC.substring(2, 4), 10);
+            const day = parseInt(cleanIC.substring(4, 6), 10);
+
+            // Validasi ringkas
+            if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+
+            const today = new Date();
+            const birthDate = new Date(fullYear, month - 1, day);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        };
+
+        const autoDetectUmur = () => {
+            const icInput = document.getElementById('t-ic').value;
+            const umurDisplay = document.getElementById('t-umur-display');
+            const umur = kiraUmurDariIC(icInput);
+            
+            if (umur !== null) {
+                umurDisplay.value = umur + " Tahun";
+            } else {
+                umurDisplay.value = "";
+                umurDisplay.placeholder = "Sila masukkan IC yang sah (Contoh: 790101-01-1234)";
             }
         };
 
@@ -1488,6 +1544,14 @@
                 if (guruList.length === 0) return '-';
                 return `<ol class="list-decimal list-inside space-y-1">` + guruList.map(t => `<li class="pl-1">${t.akademik && t.akademik !== '-' ? t.akademik : '<span class="text-slate-400 italic">Tiada Rekod</span>'}</li>`).join('') + `</ol>`;
             }},
+            senaraiUmurGuru: { label: "Umur Guru", get: s => {
+                const guruList = getReportTeachers(s.nama);
+                if (guruList.length === 0) return '-';
+                return `<ol class="list-decimal list-inside space-y-1">` + guruList.map(t => {
+                    const umur = kiraUmurDariIC(t.ic);
+                    return `<li class="pl-1">${umur !== null ? umur + ' Tahun' : '<span class="text-slate-400 italic">Tiada Rekod</span>'}</li>`;
+                }).join('') + `</ol>`;
+            }},
             jantinaGuru: { label: "Jantina Guru", get: s => {
                 const guruList = getReportTeachers(s.nama);
                 if (guruList.length === 0) return '-';
@@ -2191,6 +2255,10 @@
                             else if (flattenTeacherList && k === 'senaraiJawatan') val = t.jawatan && t.jawatan !== '-' ? t.jawatan : '<span class="text-slate-400 italic">Tiada Rekod</span>';
                             else if (flattenTeacherList && k === 'senaraiGredGuru') val = t.gred && t.gred !== '-' ? t.gred : '<span class="text-slate-400 italic">Tiada Rekod</span>';
                             else if (flattenTeacherList && k === 'senaraiAkademikGuru') val = t.akademik && t.akademik !== '-' ? t.akademik : '<span class="text-slate-400 italic">Tiada Rekod</span>';
+                            else if (flattenTeacherList && k === 'senaraiUmurGuru') {
+                                const u = kiraUmurDariIC(t.ic);
+                                val = u !== null ? u + ' Tahun' : '<span class="text-slate-400 italic">Tiada Rekod</span>';
+                            }
                             else if (flattenTeacherList && k === 'jantinaGuru') val = t.jantina && t.jantina !== 'Tiada' ? t.jantina : '<span class="text-slate-400 italic">Tiada Rekod</span>';
                             else {
                                 val = reportColumnsAvailable[k].get(s);
@@ -2729,6 +2797,9 @@
                     document.getElementById('t-ic').value = t.ic || '';
                     document.getElementById('t-email').value = t.email && t.email !== '-' ? t.email : '';
                     document.getElementById('t-telefon').value = t.telefon && t.telefon !== '-' ? t.telefon : '';
+                    
+                    // Auto kira umur semasa buka borang kemaskini
+                    autoDetectUmur();
                     
                     document.getElementById('t-akademik').value = (t.akademik || 'TIADA').toUpperCase();
                     // Kalis ejaan untuk Gred dan Jawatan
