@@ -1544,7 +1544,7 @@
                 if (guruList.length === 0) return '-';
                 return `<ol class="list-decimal list-inside space-y-1">` + guruList.map(t => `<li class="pl-1">${t.akademik && t.akademik !== '-' ? t.akademik : '<span class="text-slate-400 italic">Tiada Rekod</span>'}</li>`).join('') + `</ol>`;
             }},
-            senaraiUmurGuru: { label: "Umur Guru", get: s => {
+            senaraiUmurGuru: { label: "Umur Semasa", get: s => {
                 const guruList = getReportTeachers(s.nama);
                 if (guruList.length === 0) return '-';
                 return `<ol class="list-decimal list-inside space-y-1">` + guruList.map(t => {
@@ -1566,18 +1566,11 @@
             document.getElementById('stat-total-teachers').innerText = activeTeachers;
         };
 
-        const getFilteredSchools = () => {
+        const getFilteredSchools = (ignoreSearch = false) => {
             let filtered = schools.filter(s => !deletedSchoolsBlacklist.includes(s.id));
-            if (searchQuery) {
-                const q = searchQuery.toLowerCase();
-                filtered = filtered.filter(s => 
-                    s.nama.toLowerCase().includes(q) || 
-                    (s.noDaftar && s.noDaftar.toLowerCase().includes(q)) || 
-                    (s.lokasi && s.lokasi.toLowerCase().includes(q)) ||
-                    (s.gred && s.gred.toLowerCase().includes(q)) ||
-                    getSchoolCategory(s).toLowerCase().includes(q)
-                );
-            }
+            
+            // Perhatian: Semakan filterZon dan filterGred PERLU DILAKUKAN TERLEBIH DAHULU 
+            // sebelum carian kotak teks (searchQuery) supaya senarai yang ditapis lebih tepat.
             if (filterZon !== 'Semua') {
                 filtered = filtered.filter(s => String(s.zon) === filterZon);
             }
@@ -1585,20 +1578,67 @@
                 if (['A', 'B', 'C'].includes(filterGred)) filtered = filtered.filter(s => s.gred === filterGred);
                 else filtered = filtered.filter(s => getSchoolCategory(s) === filterGred || s.gred === filterGred);
             }
+
+            if (searchQuery && !ignoreSearch) {
+                const q = String(searchQuery).toLowerCase().trim();
+                filtered = filtered.filter(s => {
+                    const safeStr = (val) => val ? String(val).toLowerCase() : "";
+                    return safeStr(s.nama).includes(q) || 
+                           safeStr(s.noDaftar).includes(q) || 
+                           safeStr(s.lokasi).includes(q) ||
+                           safeStr(s.gred).includes(q) ||
+                           safeStr(getSchoolCategory(s)).includes(q);
+                });
+            }
+            
             return filtered;
         };
 
         const getFilteredTeachers = () => {
             let filtered = teachers.filter(t => !deletedTeachersBlacklist.includes(t.id));
-            if (searchQuery) {
-                const q = searchQuery.toLowerCase();
-                filtered = filtered.filter(t => t.nama.toLowerCase().includes(q) || t.ic.includes(q) || t.sekolah.toLowerCase().includes(q));
-            }
+            
+            // Tapis berdasarkan dropdown Zon & Gred
             if (filterZon !== 'Semua' || filterGred !== 'Semua') {
-                const validSchoolNames = getFilteredSchools().map(s => normalizeSchoolName(s.nama));
-                filtered = filtered.filter(t => validSchoolNames.includes(normalizeSchoolName(t.sekolah)));
+                filtered = filtered.filter(t => {
+                    const tSchool = schools.find(s => normalizeSchoolName(s.nama) === normalizeSchoolName(t.sekolah));
+                    let matchZon = true;
+                    let matchGred = true;
+
+                    if (filterZon !== 'Semua') {
+                        matchZon = tSchool && String(tSchool.zon) === filterZon;
+                    }
+                    if (filterGred !== 'Semua') {
+                        // Padan dengan gred guru atau kategori sekolah
+                        const isGredGuru = t.gred && String(t.gred).toUpperCase() === String(filterGred).toUpperCase();
+                        const isGredSekolah = tSchool && (tSchool.gred === filterGred || getSchoolCategory(tSchool) === filterGred);
+                        matchGred = isGredGuru || isGredSekolah;
+                    }
+
+                    return matchZon && matchGred;
+                });
             }
-            return filtered.sort((a,b) => a.sekolah.localeCompare(b.sekolah) || a.nama.localeCompare(b.nama));
+
+            // Tapis berdasarkan kotak carian
+            if (searchQuery) {
+                const q = String(searchQuery).toLowerCase().trim();
+                filtered = filtered.filter(t => {
+                    const safeStr = (val) => val ? String(val).toLowerCase() : "";
+                    return safeStr(t.nama).includes(q) || 
+                           safeStr(t.ic).includes(q) || 
+                           safeStr(t.sekolah).includes(q) ||
+                           safeStr(t.jawatan).includes(q) ||
+                           safeStr(t.gred).includes(q) ||
+                           safeStr(t.telefon).includes(q);
+                });
+            }
+            
+            return filtered.sort((a,b) => {
+                const sA = a.sekolah ? String(a.sekolah) : "";
+                const sB = b.sekolah ? String(b.sekolah) : "";
+                const nA = a.nama ? String(a.nama) : "";
+                const nB = b.nama ? String(b.nama) : "";
+                return sA.localeCompare(sB) || nA.localeCompare(nB);
+            });
         };
 
         const handleFilterChange = () => {
@@ -2900,9 +2940,14 @@
         };
 
         const exportDataJSON = () => {
+            // Sertakan umur yang dikira dari IC ke dalam data eksport guru
+            const teachersWithAge = teachers.map(t => ({
+                ...t,
+                umur: kiraUmurDariIC(t.ic) !== null ? kiraUmurDariIC(t.ic) : ""
+            }));
             const dataToExport = {
                 schools: schools,
-                teachers: teachers,
+                teachers: teachersWithAge,
                 deletedSchoolsBlacklist: deletedSchoolsBlacklist,
                 deletedTeachersBlacklist: deletedTeachersBlacklist
             };
@@ -2962,7 +3007,13 @@
         };
 
         const exportCSV = (type) => {
-            const data = type === 'schools' ? schools : teachers;
+            let data = type === 'schools' ? schools : teachers;
+            if (type === 'teachers') {
+                data = teachers.map(t => ({
+                    ...t,
+                    umur: kiraUmurDariIC(t.ic) !== null ? kiraUmurDariIC(t.ic) : ""
+                }));
+            }
             const filename = type === 'schools' ? 'ppid_kluang_sekolah.csv' : 'ppid_kluang_guru.csv';
             
             if (!data || data.length === 0) {
