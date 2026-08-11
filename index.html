@@ -397,6 +397,21 @@
                     </div>
                 </div>
                 <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">Kelulusan Akademik Tertinggi</label>
+                    <select required id="t-akademik" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white shadow-sm font-medium uppercase">
+                        <option value="">-- PILIH KELULUSAN --</option>
+                        <option value="PHD">IJAZAH DOKTOR FALSAFAH (PHD)</option>
+                        <option value="MASTER">IJAZAH SARJANA (MASTER)</option>
+                        <option value="DEGREE">IJAZAH SARJANA MUDA (DEGREE)</option>
+                        <option value="DIPLOMA">DIPLOMA / DPLI / KPLI</option>
+                        <option value="STPM/STAM">STPM / STAM / SETARAF</option>
+                        <option value="SPM">SPM / SPMV / SETARAF</option>
+                        <option value="SRP/PMR/PT3">SRP / PMR / PT3 / SETARAF</option>
+                        <option value="SIJIL KHAS">SIJIL KEMAHIRAN / KHAS</option>
+                        <option value="TIADA">TIADA / LAIN-LAIN</option>
+                    </select>
+                </div>
+                <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">Sekolah Bertugas</label>
                     <select id="t-sekolah" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white shadow-sm font-medium"></select>
                 </div>
@@ -1325,7 +1340,8 @@
                         email: p[5] ? p[5].trim() : "-", 
                         telefon: p[6] ? p[6].trim() : "-",
                         status: 'Aktif',
-                        jantina: jantina
+                        jantina: jantina,
+                        akademik: 'TIADA' // Default value for new field
                     };
                 }).filter(t => !permanentlyRemovedTeachers.includes(t.nama));
             } else {
@@ -1335,6 +1351,7 @@
                 teachers.forEach((t, i) => { 
                     if(!t.id) { t.id = Date.now() + 1000 + i; tSave = true; } 
                     if(t.telefon === undefined) { t.telefon = "-"; tSave = true; }
+                    if(t.akademik === undefined) { t.akademik = "TIADA"; tSave = true; }
                     if(!t.jantina) {
                         t.jantina = "Tiada";
                         if (t.nama.includes(' BINTI ') || t.nama.includes(' BT ') || t.nama.includes(' BTE ')) t.jantina = "Perempuan";
@@ -1465,6 +1482,11 @@
                 const guruList = getReportTeachers(s.nama);
                 if (guruList.length === 0) return '-';
                 return `<ol class="list-decimal list-inside space-y-1">` + guruList.map(t => `<li class="pl-1">${t.gred && t.gred !== '-' ? t.gred : '<span class="text-slate-400 italic">Tiada Rekod</span>'}</li>`).join('') + `</ol>`;
+            }},
+            senaraiAkademikGuru: { label: "Kelulusan Akademik", get: s => {
+                const guruList = getReportTeachers(s.nama);
+                if (guruList.length === 0) return '-';
+                return `<ol class="list-decimal list-inside space-y-1">` + guruList.map(t => `<li class="pl-1">${t.akademik && t.akademik !== '-' ? t.akademik : '<span class="text-slate-400 italic">Tiada Rekod</span>'}</li>`).join('') + `</ol>`;
             }},
             jantinaGuru: { label: "Jantina Guru", get: s => {
                 const guruList = getReportTeachers(s.nama);
@@ -1649,6 +1671,7 @@
                     <th class="px-4 py-3 rounded-tl-xl w-10 text-center">No</th>
                     <th class="px-4 py-3">Nama Guru</th>
                     <th class="px-4 py-3">Jantina</th>
+                    <th class="px-4 py-3">Kelulusan</th>
                     <th class="px-4 py-3">No Telefon</th>
                     <th class="px-4 py-3">Sekolah</th>
                     <th class="px-4 py-3">Jawatan</th>
@@ -1656,7 +1679,7 @@
                     <th class="px-4 py-3 rounded-tr-xl text-center admin-only ${isAdmin ? '' : 'hidden'}">Tindakan</th>
                 </tr>`;
                 
-                if(data.length === 0) tbody.innerHTML = `<tr><td colspan="8" class="px-4 py-8 text-center text-slate-500">Tiada rekod.</td></tr>`;
+                if(data.length === 0) tbody.innerHTML = `<tr><td colspan="9" class="px-4 py-8 text-center text-slate-500">Tiada rekod.</td></tr>`;
                 else {
                     tbody.innerHTML = data.map((t, i) => `
                         <tr class="hover:bg-slate-50 transition-colors">
@@ -1665,6 +1688,7 @@
                                 <div class="text-[10px] text-slate-400 font-mono mt-0.5">${t.ic}</div>
                             </td>
                             <td class="px-4 py-3 text-slate-600 text-xs">${t.jantina || '-'}</td>
+                            <td class="px-4 py-3 text-slate-600 font-bold text-xs">${t.akademik || 'TIADA'}</td>
                             <td class="px-4 py-3 text-slate-600 font-medium text-xs">${t.telefon || '-'}</td>
                             <td class="px-4 py-3 text-slate-600 font-medium text-xs">${t.sekolah}</td>
                             <td class="px-4 py-3 text-slate-600 text-xs">${t.gred} - ${t.jawatan}</td>
@@ -2166,6 +2190,7 @@
                             else if (flattenTeacherList && k === 'senaraiTelefon') val = t.telefon && t.telefon !== '-' ? t.telefon : '<span class="text-slate-400 italic">Tiada Rekod</span>';
                             else if (flattenTeacherList && k === 'senaraiJawatan') val = t.jawatan && t.jawatan !== '-' ? t.jawatan : '<span class="text-slate-400 italic">Tiada Rekod</span>';
                             else if (flattenTeacherList && k === 'senaraiGredGuru') val = t.gred && t.gred !== '-' ? t.gred : '<span class="text-slate-400 italic">Tiada Rekod</span>';
+                            else if (flattenTeacherList && k === 'senaraiAkademikGuru') val = t.akademik && t.akademik !== '-' ? t.akademik : '<span class="text-slate-400 italic">Tiada Rekod</span>';
                             else if (flattenTeacherList && k === 'jantinaGuru') val = t.jantina && t.jantina !== 'Tiada' ? t.jantina : '<span class="text-slate-400 italic">Tiada Rekod</span>';
                             else {
                                 val = reportColumnsAvailable[k].get(s);
@@ -2663,6 +2688,7 @@
             document.getElementById('t-telefon').value = '';
             document.getElementById('t-gred').value = '';
             document.getElementById('t-jawatan').value = '';
+            document.getElementById('t-akademik').value = '';
             document.getElementById('t-status').value = 'Aktif';
             if (document.getElementById('t-sekolah').options.length > 0) {
                 document.getElementById('t-sekolah').selectedIndex = 0;
@@ -2704,6 +2730,7 @@
                     document.getElementById('t-email').value = t.email && t.email !== '-' ? t.email : '';
                     document.getElementById('t-telefon').value = t.telefon && t.telefon !== '-' ? t.telefon : '';
                     
+                    document.getElementById('t-akademik').value = (t.akademik || 'TIADA').toUpperCase();
                     // Kalis ejaan untuk Gred dan Jawatan
                     document.getElementById('t-gred').value = (t.gred || '').toUpperCase();
                     document.getElementById('t-jawatan').value = (t.jawatan || '').toUpperCase();
@@ -2748,6 +2775,7 @@
                 sekolah: document.getElementById('t-sekolah').value,
                 gred: document.getElementById('t-gred').value.toUpperCase(),
                 jawatan: document.getElementById('t-jawatan').value.toUpperCase(),
+                akademik: document.getElementById('t-akademik').value.toUpperCase(),
                 ic: document.getElementById('t-ic').value,
                 email: document.getElementById('t-email').value.toLowerCase(),
                 telefon: document.getElementById('t-telefon').value,
