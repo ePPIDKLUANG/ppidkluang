@@ -645,6 +645,9 @@
         };
 
         const getSchoolCategory = (s) => {
+            // Hanya SA Husnul Khatimah / Khotimah sahaja masuk kategori Institusi Penjara
+            if (s.nama && (s.nama.toUpperCase().includes('HUSNUL KHATIMAH') || s.nama.toUpperCase().includes('HUSNUL KHOTIMAH'))) return 'PENJARA';
+            
             if (['A', 'B', 'C'].includes(s.gred)) return 'SAKNJ';
             if (s.gred === 'TAJ') return 'TAJ';
             if (s.gred === 'TAHFIZ') return 'TAHFIZ';
@@ -662,6 +665,7 @@
                 case 'PONDOK': return 'Madrasah / Pondok';
                 case 'SWASTA': return 'Sekolah Swasta (SRAS/SMAS)';
                 case 'PPID': return 'Pejabat Pendidikan Islam Daerah (PPID)';
+                case 'PENJARA': return 'Institusi Penjara';
                 default: return 'Lain-lain';
             }
         };
@@ -770,6 +774,7 @@
                 if (c === 'PONDOK') return "المدارس الدينية (بوندوك) / MMJ";
                 if (c === 'TAJ') return "رياض الأطفال الدينية بجوهر (TAJ)";
                 if (c === 'PPID') return "مكتب التعليم الإسلامي للمنطقة (PPID)";
+                if (c === 'PENJARA') return "مؤسسة السجن";
             }
             return getCategoryLabel(c);
         };
@@ -1544,7 +1549,7 @@
                 if (guruList.length === 0) return '-';
                 return `<ol class="list-decimal list-inside space-y-1">` + guruList.map(t => `<li class="pl-1">${t.akademik && t.akademik !== '-' ? t.akademik : '<span class="text-slate-400 italic">Tiada Rekod</span>'}</li>`).join('') + `</ol>`;
             }},
-            senaraiUmurGuru: { label: "Umur Semasa", get: s => {
+            senaraiUmurGuru: { label: "Umur Guru", get: s => {
                 const guruList = getReportTeachers(s.nama);
                 if (guruList.length === 0) return '-';
                 return `<ol class="list-decimal list-inside space-y-1">` + guruList.map(t => {
@@ -1580,15 +1585,14 @@
             }
 
             if (searchQuery && !ignoreSearch) {
-                const q = String(searchQuery).toLowerCase().trim();
-                filtered = filtered.filter(s => {
-                    const safeStr = (val) => val ? String(val).toLowerCase() : "";
-                    return safeStr(s.nama).includes(q) || 
-                           safeStr(s.noDaftar).includes(q) || 
-                           safeStr(s.lokasi).includes(q) ||
-                           safeStr(s.gred).includes(q) ||
-                           safeStr(getSchoolCategory(s)).includes(q);
-                });
+                const q = searchQuery.toLowerCase();
+                filtered = filtered.filter(s => 
+                    s.nama.toLowerCase().includes(q) || 
+                    (s.noDaftar && s.noDaftar.toLowerCase().includes(q)) || 
+                    (s.lokasi && s.lokasi.toLowerCase().includes(q)) ||
+                    (s.gred && s.gred.toLowerCase().includes(q)) ||
+                    getSchoolCategory(s).toLowerCase().includes(q)
+                );
             }
             
             return filtered;
@@ -1597,48 +1601,30 @@
         const getFilteredTeachers = () => {
             let filtered = teachers.filter(t => !deletedTeachersBlacklist.includes(t.id));
             
-            // Tapis berdasarkan dropdown Zon & Gred
             if (filterZon !== 'Semua' || filterGred !== 'Semua') {
-                filtered = filtered.filter(t => {
-                    const tSchool = schools.find(s => normalizeSchoolName(s.nama) === normalizeSchoolName(t.sekolah));
-                    let matchZon = true;
-                    let matchGred = true;
-
-                    if (filterZon !== 'Semua') {
-                        matchZon = tSchool && String(tSchool.zon) === filterZon;
-                    }
-                    if (filterGred !== 'Semua') {
-                        // Padan dengan gred guru atau kategori sekolah
-                        const isGredGuru = t.gred && String(t.gred).toUpperCase() === String(filterGred).toUpperCase();
-                        const isGredSekolah = tSchool && (tSchool.gred === filterGred || getSchoolCategory(tSchool) === filterGred);
-                        matchGred = isGredGuru || isGredSekolah;
-                    }
-
-                    return matchZon && matchGred;
-                });
+                // Abaikan teks carian semasa mendapatkan senarai sekolah yang sah untuk zon/gred ini
+                // Ini memastikan kotak carian tidak menyebabkan senarai sekolah kosong semasa menapis guru.
+                const validSchoolNames = getFilteredSchools(true).map(s => normalizeSchoolName(s.nama));
+                
+                if (filterGred !== 'Semua' && teachers.some(t => t.gred && t.gred.toUpperCase() === filterGred.toUpperCase())) {
+                    filtered = filtered.filter(t => t.gred && t.gred.toUpperCase() === filterGred.toUpperCase() || (t.sekolah && validSchoolNames.includes(normalizeSchoolName(t.sekolah))));
+                } else {
+                    filtered = filtered.filter(t => validSchoolNames.includes(normalizeSchoolName(t.sekolah)));
+                }
             }
 
-            // Tapis berdasarkan kotak carian
             if (searchQuery) {
-                const q = String(searchQuery).toLowerCase().trim();
-                filtered = filtered.filter(t => {
-                    const safeStr = (val) => val ? String(val).toLowerCase() : "";
-                    return safeStr(t.nama).includes(q) || 
-                           safeStr(t.ic).includes(q) || 
-                           safeStr(t.sekolah).includes(q) ||
-                           safeStr(t.jawatan).includes(q) ||
-                           safeStr(t.gred).includes(q) ||
-                           safeStr(t.telefon).includes(q);
-                });
+                const q = searchQuery.toLowerCase();
+                filtered = filtered.filter(t => 
+                    (t.nama && t.nama.toLowerCase().includes(q)) || 
+                    (t.ic && t.ic.toLowerCase().includes(q)) || 
+                    (t.sekolah && t.sekolah.toLowerCase().includes(q)) ||
+                    (t.jawatan && t.jawatan.toLowerCase().includes(q)) ||
+                    (t.gred && t.gred.toLowerCase().includes(q))
+                );
             }
             
-            return filtered.sort((a,b) => {
-                const sA = a.sekolah ? String(a.sekolah) : "";
-                const sB = b.sekolah ? String(b.sekolah) : "";
-                const nA = a.nama ? String(a.nama) : "";
-                const nB = b.nama ? String(b.nama) : "";
-                return sA.localeCompare(sB) || nA.localeCompare(nB);
-            });
+            return filtered.sort((a,b) => a.sekolah.localeCompare(b.sekolah) || a.nama.localeCompare(b.nama));
         };
 
         const handleFilterChange = () => {
@@ -1952,7 +1938,7 @@
             if (!container.innerHTML.trim()) {
                 
                 // 1. Kategori Institusi
-                let catListItems = ['SAKNJ', 'TAJ', 'TAHFIZ', 'PONDOK', 'SWASTA', 'PPID'].map(c => `
+                let catListItems = ['SAKNJ', 'TAJ', 'TAHFIZ', 'PONDOK', 'SWASTA', 'PPID', 'PENJARA'].map(c => `
                     <label class="flex items-center gap-2.5 text-sm cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors">
                         <input type="checkbox" value="${c}" data-label="${getCategoryLabel(c)}" data-label-ar="${getTranslatedCat(c)}" class="cat-check accent-sky-600 w-4 h-4 rounded border-slate-300" onchange="handleItemChange('dd-kategori', 'lbl-kategori', 'Kategori', 'all-cat')"> 
                         <span class="font-medium text-slate-700 lang-text" data-ms="${getCategoryLabel(c)}" data-ar="${getTranslatedCat(c)}">${currentLang === 'ar' ? getTranslatedCat(c) : getCategoryLabel(c)}</span>
