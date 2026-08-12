@@ -702,9 +702,9 @@
 
         // Fungsi mengira umur dari nombor IC
         const kiraUmurDariIC = (icString) => {
-            if (!icString) return null;
-            // Buang semua character selain nombor
-            const cleanIC = icString.replace(/[^0-9]/g, '');
+            if (!icString || icString === '-') return null;
+            // Buang semua character selain nombor dan paksa format ke String untuk elak ralat (crash)
+            const cleanIC = String(icString).replace(/[^0-9]/g, '');
             if (cleanIC.length < 6) return null; // Tak cukup panjang untuk teka tahun
 
             let yearPrefix = parseInt(cleanIC.substring(0, 2), 10);
@@ -1549,7 +1549,7 @@
                 if (guruList.length === 0) return '-';
                 return `<ol class="list-decimal list-inside space-y-1">` + guruList.map(t => `<li class="pl-1">${t.akademik && t.akademik !== '-' ? t.akademik : '<span class="text-slate-400 italic">Tiada Rekod</span>'}</li>`).join('') + `</ol>`;
             }},
-            senaraiUmurGuru: { label: "Umur Guru", get: s => {
+            senaraiUmurGuru: { label: "Umur Semasa", get: s => {
                 const guruList = getReportTeachers(s.nama);
                 if (guruList.length === 0) return '-';
                 return `<ol class="list-decimal list-inside space-y-1">` + guruList.map(t => {
@@ -1761,6 +1761,7 @@
                     <th class="px-4 py-3 rounded-tl-xl w-10 text-center">No</th>
                     <th class="px-4 py-3">Nama Guru</th>
                     <th class="px-4 py-3">Jantina</th>
+                    <th class="px-4 py-3">Umur</th>
                     <th class="px-4 py-3">Kelulusan</th>
                     <th class="px-4 py-3">No Telefon</th>
                     <th class="px-4 py-3">Sekolah</th>
@@ -1769,15 +1770,18 @@
                     <th class="px-4 py-3 rounded-tr-xl text-center admin-only ${isAdmin ? '' : 'hidden'}">Tindakan</th>
                 </tr>`;
                 
-                if(data.length === 0) tbody.innerHTML = `<tr><td colspan="9" class="px-4 py-8 text-center text-slate-500">Tiada rekod.</td></tr>`;
+                if(data.length === 0) tbody.innerHTML = `<tr><td colspan="10" class="px-4 py-8 text-center text-slate-500">Tiada rekod.</td></tr>`;
                 else {
-                    tbody.innerHTML = data.map((t, i) => `
+                    tbody.innerHTML = data.map((t, i) => {
+                        const umur = kiraUmurDariIC(t.ic);
+                        return `
                         <tr class="hover:bg-slate-50 transition-colors">
                             <td class="px-4 py-3 text-center text-slate-400">${i+1}</td>
                             <td class="px-4 py-3 font-bold text-slate-700">${t.nama}
                                 <div class="text-[10px] text-slate-400 font-mono mt-0.5">${t.ic}</div>
                             </td>
                             <td class="px-4 py-3 text-slate-600 text-xs">${t.jantina || '-'}</td>
+                            <td class="px-4 py-3 text-slate-600 font-bold text-xs whitespace-nowrap">${umur !== null ? umur + ' Thn' : '-'}</td>
                             <td class="px-4 py-3 text-slate-600 font-bold text-xs">${t.akademik || 'TIADA'}</td>
                             <td class="px-4 py-3 text-slate-600 font-medium text-xs">${t.telefon || '-'}</td>
                             <td class="px-4 py-3 text-slate-600 font-medium text-xs">${t.sekolah}</td>
@@ -1788,7 +1792,7 @@
                                 <button onclick="deleteTeacher('${t.id || t.nama}')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors inline-block mx-0.5" title="Padam"><i data-lucide="trash" class="w-4 h-4"></i></button>
                             </td>
                         </tr>
-                    `).join('');
+                    `}).join('');
                 }
             }
             lucide.createIcons();
