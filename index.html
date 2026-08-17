@@ -373,6 +373,7 @@
                             <option value="KAFA">KAFA</option>
                             <option value="TAJ">TAJ</option>
                             <option value="S1">S1</option>
+                            <option value="S19">S19</option>
                             <option value="TIADA">TIADA / LAIN-LAIN</option>
                         </select>
                     </div>
@@ -398,6 +399,7 @@
                             <option value="PENYELIA KO KURIKULUM">PENYELIA KO KURIKULUM</option>
                             <option value="PENYELIA KAFA">PENYELIA KAFA</option>
                             <option value="GURU PENGGANTI">GURU PENGGANTI</option>
+                            <option value="GURU TADIKA">GURU TADIKA</option>
                             <option value="LAIN-LAIN">LAIN-LAIN</option>
                         </select>
                     </div>
@@ -467,6 +469,7 @@
                                 <option value="SMAS">SEK. MEN. SWASTA (SMAS)</option><option value="PONDOK">PONDOK</option>
                                 <option value="MMJ">MADRASAH (MMJ)</option><option value="TAJ">TADIKA AGAMA (TAJ)</option>
                                 <option value="PPID">PEJABAT PENDIDIKAN ISLAM DAERAH (PPID)</option>
+                                <option value="PENJARA">INSTITUSI PENJARA</option>
                             </select>
                         </div>
                         <div>
@@ -1495,8 +1498,8 @@
                 if (['TAHFIZ', 'PONDOK', 'SWASTA', 'MMJ'].includes(s.gred)) return (s.pengetua && s.pengetua.trim() !== "" ? 1 : 0);
                 return getTeachersForSchool(s.nama).filter(t => t.status === 'Aktif' && (t.jawatan === 'GURU BESAR' || t.jawatan === 'GB')).length;
             }},
-            bilanganGuruTAJ: { label: "Bilangan Guru TAJ", get: s => {
-                return getTeachersForSchool(s.nama).filter(t => t.status === 'Aktif' && t.gred === 'TAJ').length;
+            bilanganGuruTadika: { label: "Bil Guru TAJ", get: s => {
+                return getTeachersForSchool(s.nama).filter(t => t.status === 'Aktif' && (t.jawatan === 'GURU TADIKA' || t.gred === 'S19' || t.gred === 'TAJ')).length;
             }},
             bilanganGuruLelaki: { label: "Bil Guru Lelaki", get: s => {
                 if (['TAHFIZ', 'PONDOK', 'SWASTA', 'MMJ'].includes(s.gred)) return Number(s.guruLelaki) || 0;
@@ -1515,6 +1518,11 @@
                 const staffList = getReportTeachers(s.nama);
                 if (staffList.length === 0) return '<span class="text-slate-400 italic">Tiada Rekod</span>';
                 return `<ol class="list-decimal list-inside space-y-1">` + staffList.map(t => `<li class="pl-1">${t.nama} <span class="text-sky-600 font-semibold">(${t.jawatan})</span></li>`).join('') + `</ol>`;
+            }},
+            senaraiGuruTadika: { label: "Senarai Guru TAJ", get: s => {
+                const list = getReportTeachers(s.nama).filter(t => t.jawatan === 'GURU TADIKA' || t.gred === 'S19' || t.gred === 'TAJ');
+                if (list.length === 0) return '-';
+                return `<ol class="list-decimal list-inside space-y-1">` + list.map(t => `<li class="pl-1">${t.nama}</li>`).join('') + `</ol>`;
             }},
             senaraiGuru: { label: "Senarai Guru", get: s => {
                 const guruList = getReportTeachers(s.nama);
