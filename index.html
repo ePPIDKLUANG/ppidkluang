@@ -193,6 +193,7 @@
                         <option value="PONDOK" class="lang-text" data-ms="Pondok / MMJ" data-ar="بوندوك / MMJ">Pondok / MMJ</option>
                         <option value="TAJ" class="lang-text" data-ms="Tadika Agama Johor (TAJ)" data-ar="روضة جوهر الدينية (TAJ)">Tadika Agama Johor (TAJ)</option>
                         <option value="PPID" class="lang-text" data-ms="Pejabat Pendidikan Islam Daerah (PPID)" data-ar="مكتب التعليم الإسلامي بالمنطقة (PPID)">Pejabat Pendidikan Islam Daerah (PPID)</option>
+                        <option value="PENJARA" class="lang-text" data-ms="Institusi Penjara" data-ar="مؤسسة السجن">Institusi Penjara</option>
                     </select>
                     <button id="btn-add-school" onclick="openSchoolForm()" class="hidden items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-4 py-2.5 rounded-xl font-medium text-sm transition-all shadow-md whitespace-nowrap">
                         <i data-lucide="plus" class="w-4 h-4"></i> <span class="lang-text" data-ms="Tambah Sekolah" data-ar="إضافة مدرسة">Tambah Sekolah</span>
@@ -405,9 +406,9 @@
                     <label class="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">Kelulusan Akademik Tertinggi</label>
                     <select required id="t-akademik" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white shadow-sm font-medium uppercase">
                         <option value="">-- PILIH KELULUSAN --</option>
-                        <option value="PHD">IJAZAH DOKTOR FALSAFAH (PHD)</option>
-                        <option value="MASTER">IJAZAH SARJANA (MASTER)</option>
-                        <option value="DEGREE">IJAZAH SARJANA MUDA (DEGREE)</option>
+                        <option value="IJAZAH DOKTOR FALSAFAH">IJAZAH DOKTOR FALSAFAH (PHD)</option>
+                        <option value="IJAZAH SARJANA">IJAZAH SARJANA (MASTER)</option>
+                        <option value="IJAZAH SARJANA MUDA">IJAZAH SARJANA MUDA</option>
                         <option value="DIPLOMA">DIPLOMA / DPLI / KPLI</option>
                         <option value="STPM/STAM">STPM / STAM / SETARAF</option>
                         <option value="SPM">SPM / SPMV / SETARAF</option>
@@ -1413,6 +1414,12 @@
                     if(!t.id) { t.id = Date.now() + 1000 + i; tSave = true; } 
                     if(t.telefon === undefined) { t.telefon = "-"; tSave = true; }
                     if(t.akademik === undefined) { t.akademik = "TIADA"; tSave = true; }
+                    
+                    // Kemaskini automatik format kelulusan akademik lama (Migration)
+                    if(t.akademik === 'DEGREE') { t.akademik = 'IJAZAH SARJANA MUDA'; tSave = true; }
+                    if(t.akademik === 'MASTER') { t.akademik = 'IJAZAH SARJANA'; tSave = true; }
+                    if(t.akademik === 'PHD') { t.akademik = 'IJAZAH DOKTOR FALSAFAH'; tSave = true; }
+
                     if(!t.jantina) {
                         t.jantina = "Tiada";
                         if (t.nama.includes(' BINTI ') || t.nama.includes(' BT ') || t.nama.includes(' BTE ')) t.jantina = "Perempuan";
