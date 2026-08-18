@@ -3081,12 +3081,6 @@
                     body: JSON.stringify(payload)
                 });
 
-                // Sembunyikan kotak pilihan zon/kategori/kolum selepas berjaya simpan
-                const filterBox = document.getElementById('laporan-filter-dropdowns');
-                if (filterBox) {
-                    filterBox.style.display = 'none';
-                }
-
                 showMessage("Berjaya Disegerak!", "Data pangkalan data sekolah dan guru PPID Kluang telah berjaya dihantar ke Google Drive / Google Sheets anda.");
             } catch (error) {
                 console.error("Google Drive Sync Error:", error);
