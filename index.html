@@ -2168,6 +2168,14 @@
             data = data.filter(s => selectedReportCategories.includes(getSchoolCategory(s)));
             data = data.filter(s => selectedReportZons.includes(String(s.zon)));
             
+            // Tapis sekolah yang tiada Guru TAJ jika kolum Senarai Guru TAJ dipilih
+            if (selectedReportCols.includes('senaraiGuruTadika')) {
+                data = data.filter(s => {
+                    const tajList = getReportTeachers(s.nama).filter(t => t.jawatan === 'GURU TADIKA' || t.gred === 'S19' || t.gred === 'TAJ');
+                    return tajList.length > 0;
+                });
+            }
+            
             const sortMode = document.getElementById('report-sort') ? document.getElementById('report-sort').value : 'kategori_az';
             
             data.sort((a,b) => {
